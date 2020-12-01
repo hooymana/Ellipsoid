@@ -1,17 +1,28 @@
+#CODE USED TO CALCULATE ELLIPSOID HULL AND ELLIPSOID VOLUME OF INDIVIDUAL PARTICIPANT DATA
+
 rm(list=ls())
 
 library(cluster)
 library(rgl)
 
-#Load Kinematic Data for Fine Motor Phase: Data is in List format by Participant DSesNP1L
+#Load Kinematic Data for Fine Motor Phase: Data is in List format by Participant 3DKin
+load(3DKin.Rda)
+
 
 #Calculate ellipsoid hull for dwell time among each Participant
-el.cov=array(NA,c(19,3,3))
-el.loc=matrix(NA,nrow=19,ncol = 3)
-DwellEllipse=matrix(NA,nrow=19,ncol = 9)
-for(i in 1:19){
-  #Calculate ellipsoidhull for each participant
-  el.out=ellipsoidhull(as.matrix(DwellKin[[i]][1:3]))
+
+#Number of subjects
+SubNum=
+#Number of Ellipsoid Dimensions
+EllDim=3
+#pre-allocate memory
+el.cov=array(NA,c(SubNum,EllDim,EllDim))
+el.loc=matrix(NA,nrow=Subnum,ncol = EllDim)
+DwellEllipse=matrix(NA,nrow=Subnum,ncol = EllDim)
+
+for(i in 1:Subnum){
+  #Calculate ellipsoidhull for each participant, assumes data is 3 dimensional
+  el.out=ellipsoidhull(as.matrix(3DKin[[i]][1:3]))
   #Calculate semi-major axes
   ele=sqrt(el.out$d2)*(sqrt(eigen(el.out$cov)$values))
   #Covariance matrix of ellipsoid
@@ -27,7 +38,7 @@ Dwell.sigma=colMeans(el.cov,dims=1)
 Dwell.center=colMeans(el.loc)
 
 #Plot average 3D ellipsoid
-plot3d( ellipse3d(Dwell.sigma, centre = Dwell.center), col = "green", alpha = 0.5)
+plot3d( ellipse3d(Dwell.sigma, centre = Dwell.center), col = "blue", alpha = 0.5)
 
 
 DwellSemiM=data.frame(Dmean=DwellMean,
