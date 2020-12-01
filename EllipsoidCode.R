@@ -22,12 +22,12 @@ for(i in 1:19){
   DwellEllipse[i,]=c(ele)
 }
 
-#Calculate average covariance and center location
+#Calculate average covariance and center location of group
 Dwell.sigma=colMeans(el.cov,dims=1)
 Dwell.center=colMeans(el.loc)
 
-#Plot average
-plot3d( ellipse3d(Dwell.sigma, centre = Old.center), col = "green", alpha = 0.5)
+#Plot average 3D ellipsoid
+plot3d( ellipse3d(Dwell.sigma, centre = Dwell.center), col = "green", alpha = 0.5)
 
 
 DwellSemiM=data.frame(Dmean=DwellMean,
