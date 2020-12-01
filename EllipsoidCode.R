@@ -5,8 +5,8 @@ rm(list=ls())
 library(cluster)
 library(rgl)
 
-#Load Kinematic Data for Fine Motor Phase: Data is in List format by Participant 3DKin
-load(3DKin.Rda)
+#Load Kinematic Data for Fine Motor Phase: Data is in List format by Participant ThreeDKin
+load(ThreeDKin.Rda)
 
 
 #Calculate ellipsoid hull for dwell time among each Participant
@@ -22,7 +22,7 @@ DwellEllipse=matrix(NA,nrow=Subnum,ncol = EllDim)
 
 for(i in 1:Subnum){
   #Calculate ellipsoidhull for each participant, assumes data is 3 dimensional
-  el.out=ellipsoidhull(as.matrix(3DKin[[i]][1:3]))
+  el.out=ellipsoidhull(as.matrix(ThreeDKin[[i]][1:3]))
   #Calculate semi-major axes
   ele=sqrt(el.out$d2)*(sqrt(eigen(el.out$cov)$values))
   #Covariance matrix of ellipsoid
